@@ -9,10 +9,17 @@ class App extends React.Component {
     }
   }
 
+  klikNext = () => {
+       this.setState({
+         selected: Math.floor(Math.random() * 6)
+       })
+     }
+
   render() {
     return (
       <div>
         {this.props.anecdotes[this.state.selected]}
+        <p><button onClick={this.klikNext}>next please</button></p>
       </div>
     )
   }
