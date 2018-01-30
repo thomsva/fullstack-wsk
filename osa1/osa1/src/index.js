@@ -59,7 +59,7 @@ class App extends React.Component {
 
 const Button = ({text, klik}) => <button onClick={klik}>{text}</button>
 
-const Statistic = ({ name, value}) => <div>{name}: {value}</div>
+const Statistic = ({ name, value}) => <tr><td>{name}</td><td>{value}</td></tr>
 
 const Statistics = ({stats}) => {
   if (stats.hyva === 0 && stats.huono === 0 && stats.neutraali === 0) {
@@ -72,11 +72,15 @@ const Statistics = ({stats}) => {
   return (
     <div>
       <h1>tilastot</h1>
-      <Statistic name="hyvä" value={stats.hyva} />
-      <Statistic name="neutraali" value={stats.neutraali} />
-      <Statistic name="huono" value={stats.huono} />
-      <Statistic name="keskiarvo" value={(stats.hyva-stats.huono)/stats.total} />
-      <Statistic name="positiivisia" value={100*stats.hyva/stats.total +' %'} /> 
+      <table>
+        <tbody>
+          <Statistic name="hyvä" value={stats.hyva} />
+          <Statistic name="neutraali" value={stats.neutraali} />
+          <Statistic name="huono" value={stats.huono} />
+          <Statistic name="keskiarvo" value={(stats.hyva-stats.huono)/stats.total} />
+          <Statistic name="positiivisia" value={100*stats.hyva/stats.total +' %'} /> 
+        </tbody>
+      </table>
     </div>
   )
 }
