@@ -1,72 +1,50 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Otsikko = (props) => {
-  return (
-      <h1>{props.kurssi}</h1>
-  )
-}
-
-const Sisalto = (props) => {
-  return (
-      <div>
-        <p>
-          <Osa osanimi={props.osat[0].nimi} />
-          <Yhteensa tehtavia={props.osat[0].tehtavia}  />
-        </p>
-        <p>
-          <Osa osanimi={props.osat[1].nimi} />
-          <Yhteensa tehtavia={props.osat[1].tehtavia}  />
-        </p>
-        <p>
-          <Osa osanimi={props.osat[2].nimi} />
-          <Yhteensa tehtavia={props.osat[2].tehtavia}  />
-        </p>
-      </div>
-  )
-}
-
-const Yhteensa = (props) => {
-  return (
-      <span>{props.tehtavia}</span>
-  )
-}
-
-const Osa = (props) => {
-  return (
-      <span>{props.osanimi} {props.tehtavia}</span>
-  )
-}
-
-const App = () => {
-  const kurssi = {
-    nimi: 'Half Stack -sovelluskehitys',
-    osat: [
-      {
-        nimi: 'Reactin perusteet',
-        tehtavia: 10
-      },
-      {
-        nimi: 'Tiedonvälitys propseilla',
-        tehtavia: 7
-      },
-      {
-        nimi: 'Komponenttien tila',
-        tehtavia: 14
-      }
-    ]
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hyva: 0,
+      neutraali: 0,
+      huono: 0
+    }
   }
 
-  return (
-    <div>
-      <Otsikko kurssi={kurssi.nimi} />
-      <div>
-        <Sisalto osat={kurssi.osat} />
-        
-      </div>
-    </div>
-  )
+  klikHyva = () => {
+    this.setState({
+      hyva: this.state.hyva + 1
+    })
+  }
 
+  klikNeutraali = () => {
+    this.setState({
+      neutraali: this.state.neutraali + 1
+    })
+  }
+
+  klikHuono = () => {
+    this.setState({
+      huono: this.state.huono + 1
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <h1>anna palautetta</h1>
+          <button onClick={this.klikHyva}>hyvä</button>
+          <button onClick={this.klikNeutraali}>neutraali</button>
+          <button onClick={this.klikHuono}>huono</button>
+          <h1>statistiikka</h1>
+          <p>hyvä: {this.state.hyva} </p>
+          <p>neutraali: {this.state.neutraali}</p>
+          <p>huono: {this.state.huono}</p>
+        </div>
+      </div>
+    )
+  }
 }
 
 ReactDOM.render(
