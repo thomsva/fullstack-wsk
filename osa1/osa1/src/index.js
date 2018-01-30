@@ -62,6 +62,13 @@ const Button = ({text, klik}) => <button onClick={klik}>{text}</button>
 const Statistic = ({ name, value}) => <div>{name}: {value}</div>
 
 const Statistics = ({stats}) => {
+  if (stats.hyva === 0 && stats.huono === 0 && stats.neutraali === 0) {
+    return (
+      <div>
+       <p>Ei vielä annettuja palautteita!</p>
+      </div>
+    )
+  }
   return (
     <div>
       <h1>tilastot</h1>
