@@ -35,6 +35,7 @@ class App extends React.Component {
           <button onClick={this.klikVote}>vote</button>
           <button onClick={this.klikNext}>next please</button>
         </p>
+        <MostVotes votes={this.state.votes} />
       </div>
     )
   }
@@ -48,6 +49,34 @@ const anecdotes = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
+
+const MostVotes = ({votes}) => {
+  var max = votes[0];
+  var maxIndex = 0;
+
+  for (var i = 1; i < votes.length; i++) {
+      if (votes[i] > max) {
+          maxIndex = i;
+          max = votes[i];
+      }
+  }
+
+  console.log("votes:" + votes + " maxindex:" + maxIndex )
+
+  if (max >0 ){
+  return (
+      <div>
+        <h1>Anecdote with the most votes</h1>
+        <p>{anecdotes[maxIndex]}</p>
+        <p>Has {votes[maxIndex]} votes</p>
+      </div>
+    )
+  }
+  return (
+    <div>No votes given yet</div>
+  )
+
+}
 
 ReactDOM.render(
   <App anecdotes={anecdotes} />,
