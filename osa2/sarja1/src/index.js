@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Osa = (props) => <p>{props.osa} {props.tehtavia}</p>
+const Osa = (props) => <span>{props.osa} {props.tehtavia}</span>
 const Otsikko = (props) => <h1>{props.kurssi.nimi}</h1>
 const Sisalto = (props) => {
-  const [osa1, osa2, osa3] = props.kurssi.osat
-  return(
-    <div>
-      <Osa osa={osa1.nimi} tehtavia={osa1.tehtavia} />
-      <Osa osa={osa2.nimi} tehtavia={osa2.tehtavia} />
-      <Osa osa={osa3.nimi} tehtavia={osa3.tehtavia} />
-    </div>
-  )
+    //const [osa1, osa2, osa3] = props.kurssi.osat
+    console.log(props)
+    console.log(props.kurssi.osat)
+
+    return (
+        <div>
+          {props.kurssi.osat.map(osa => <li key={osa.nimi}><Osa osa={osa.nimi} tehtavia={osa.tehtavia} /></li>)}
+        </div>
+      )
+
 }
 const Yhteensa = (props) => {
   const [osa1, osa2, osa3] = props.kurssi.osat
@@ -24,8 +26,9 @@ const Yhteensa = (props) => {
 const Kurssi = ({kurssi}) =>{
     return(
         <div>
-            <h1>{kurssi.nimi}</h1>
+            <Otsikko kurssi={kurssi} />
             <Sisalto kurssi={kurssi} />
+            <Yhteensa kurssi={kurssi} />
         </div>
     )
     
