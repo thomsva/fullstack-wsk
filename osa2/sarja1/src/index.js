@@ -16,10 +16,13 @@ const Sisalto = (props) => {
 
 }
 const Yhteensa = (props) => {
-  const [osa1, osa2, osa3] = props.kurssi.osat
-  
-  return(
-    <p>yhteensä {osa1.tehtavia + osa2.tehtavia + osa3.tehtavia} tehtävää</p>
+  return (
+    <div>Tehtäviä yhteensä:
+        {props.kurssi.osat.reduce(function(sum, osa){
+            return sum+osa.tehtavia
+        },0)}
+
+    </div>
   )
 }
 
