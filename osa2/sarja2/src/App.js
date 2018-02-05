@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios'
+
 
 const NumberTableRow = ({person}) => (
   <tr><td> {person.name}</td><td> {person.number} </td></tr>
@@ -17,15 +19,20 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas', number: '040-123456' },
-        { name: 'Martti Tienari', number: '040-123456' },
-        { name: 'Arto Järvinen', number: '040-123456' },
-        { name: 'Lea Kutvonen', number: '040-123456' }
+        { name: 'Testi', number: '123' }
       ],
       newName: '',
       newNumber: '',
       filter: ''
     }
+  }
+
+  componentWillMount() {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        this.setState({ persons: response.data })
+      })
   }
 
   addPerson = (event) => {
