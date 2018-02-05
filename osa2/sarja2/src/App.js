@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios'
-
+import personService from './services/persons'
 
 const NumberTableRow = ({person}) => (
   <tr><td> {person.name}</td><td> {person.number} </td></tr>
@@ -28,8 +28,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         this.setState({ persons: response.data })
       })
@@ -37,8 +37,6 @@ class App extends React.Component {
 
   addPerson = (event) => {
     event.preventDefault()
-    console.log('nappia painettu!')
-    console.log(event.target)
     const newPerson={
       name: this.state.newName,
       number: this.state.newNumber
@@ -46,9 +44,7 @@ class App extends React.Component {
     const persons=this.state.persons
     
     if (persons.filter(person => person.name === newPerson.name).length ===0){
-      //const persons=this.state.persons.concat(newPerson)
-
-      axios.post('http://localhost:3001/persons', newPerson)
+      personService.create(newPerson)
         .then(response => {
           console.log(response)
           this.setState({
