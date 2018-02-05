@@ -1,18 +1,5 @@
 import React from 'react';
-import axios from 'axios'
 import personService from './services/persons'
-
-const NumberTableRow = ({person}) => (
-  <tr><td> {person.name}</td><td> {person.number} </td></tr>
-)
-
-const NumberTable = ({persons}) => (
-  <table>
-    <tbody>
-      {persons.map(person => <NumberTableRow key={person.name} person={person} />)}
-    </tbody>
-  </table>
-)
 
 class App extends React.Component {
   constructor(props) {
@@ -30,8 +17,8 @@ class App extends React.Component {
   componentWillMount() {
     personService
       .getAll()
-      .then(response => {
-        this.setState({ persons: response.data })
+      .then(persons => {
+        this.setState({persons})
       })
   }
 
@@ -45,10 +32,9 @@ class App extends React.Component {
     
     if (persons.filter(person => person.name === newPerson.name).length ===0){
       personService.create(newPerson)
-        .then(response => {
-          console.log(response)
+        .then(newPerson => {
           this.setState({
-            persons: this.state.persons.concat(response.data),
+            persons: this.state.persons.concat(newPerson),
             newName: '',
             newNumber: ''
           })
@@ -71,6 +57,25 @@ class App extends React.Component {
     this.setState({ filter: filter })
   }
 
+  removePerson = (deletedPerson) => {
+    return () => {
+      console.log('delete-nappia painettu', deletedPerson)
+      personService
+        .remove(deletedPerson.id)
+        .then(response => {
+          console.log(response)
+          this.setState({
+            persons: this.state.persons.filter(person => person.id !== deletedPerson.id)
+          })
+        })
+      personService
+        .getAll()
+        .then(persons => {
+          this.setState({persons})
+        })
+    }
+  }
+
   render() {
     return (
       <div>
@@ -91,7 +96,17 @@ class App extends React.Component {
         <div>
           rajaa tuloksia: <input value={this.state.filter} onChange={this.handleFilterChange} />
         </div>
-        <NumberTable persons={this.state.persons.filter(person => person.name.includes(this.state.filter))} />       
+        <table>
+          <tbody>
+            {this.state.persons.map(person => 
+              <tr key={person.name}>
+                <td> {person.name}</td>
+                <td> {person.number} </td>
+                <td><button onClick={this.removePerson(person)}>delete</button></td>
+              </tr>
+            )}
+          </tbody>
+        </table>      
       </div>
     )
   }
