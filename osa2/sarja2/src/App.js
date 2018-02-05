@@ -60,19 +60,21 @@ class App extends React.Component {
   removePerson = (deletedPerson) => {
     return () => {
       console.log('delete-nappia painettu', deletedPerson)
-      personService
-        .remove(deletedPerson.id)
-        .then(response => {
-          console.log(response)
-          this.setState({
-            persons: this.state.persons.filter(person => person.id !== deletedPerson.id)
+      if (window.confirm("Haluatko varmasti poistaa: " + deletedPerson.name +"?")) { 
+        personService
+          .remove(deletedPerson.id)
+          .then(response => {
+            console.log(response)
+            this.setState({
+              persons: this.state.persons.filter(person => person.id !== deletedPerson.id)
+            })
           })
-        })
-      personService
-        .getAll()
-        .then(persons => {
-          this.setState({persons})
-        })
+        personService
+          .getAll()
+          .then(persons => {
+            this.setState({persons})
+          })
+      }
     }
   }
 
