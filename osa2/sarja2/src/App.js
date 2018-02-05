@@ -1,6 +1,17 @@
 import React from 'react';
 import personService from './services/persons'
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div>
+      <b>{message}</b>
+    </div>
+  )
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -10,9 +21,11 @@ class App extends React.Component {
       ],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      message: ''
     }
   }
+
 
   componentWillMount() {
     personService
@@ -39,6 +52,13 @@ class App extends React.Component {
             newNumber: ''
           })
         })
+      this.setState({
+        message: "Lisätty uusi henkilö!"
+      })
+      setTimeout(() =>{
+        this.setState({message:null})
+      },5000)
+
     }else{
       const id = persons.filter(person => person.name === newPerson.name)[0].id
 
@@ -51,6 +71,12 @@ class App extends React.Component {
               persons: this.state.persons.filter(person => person.id !== id).concat(updPerson)
             })
           })
+          this.setState({
+            message: "Muutettu henkilön tietoja!"
+          })
+          setTimeout(() =>{
+            this.setState({message:null})
+          },5000)
           
       }
     }
@@ -86,13 +112,22 @@ class App extends React.Component {
           .then(persons => {
             this.setState({persons})
           })
+          this.setState({
+            message: "Poistettu henkilö!"
+          })
+          setTimeout(() =>{
+            this.setState({message:null})
+          },5000)
       }
     }
   }
 
+
+
   render() {
     return (
       <div>
+        <Notification message={this.state.message}/>
         <h2>Puhelinluettelo</h2>
         <form onSubmit={this.addPerson}>
           <div>
