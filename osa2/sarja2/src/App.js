@@ -19,14 +19,18 @@ class App extends React.Component {
     const newPerson={
       name: this.state.newName
     }
-    if (persons.filter(person => person.name === newPerson.name).length !=0){
+    const persons=this.state.persons
+    console.log(persons.filter(person => person.name === newPerson.name).length)
+    if (persons.filter(person => person.name === newPerson.name).length ===0){
       const persons=this.state.persons.concat(newPerson)
+      this.setState({
+        persons: persons,
+        newName: ''
+      })
+    }else{
+      alert('Virhe! Nimi on jo olemassa!')
     }
-    
-    this.setState({
-      persons: persons,
-      newName: ''
-    })
+
   }
 
   handleNameChange = (event) => {
