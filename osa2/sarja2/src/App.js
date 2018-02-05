@@ -1,5 +1,17 @@
 import React from 'react';
 
+const NumberTableRow = ({person}) => (
+  <tr><td> {person.name}</td><td> {person.number} </td></tr>
+)
+
+const NumberTable = ({persons}) => (
+  <table>
+    <tbody>
+      {persons.map(person => <NumberTableRow key={person.name} person={person} />)}
+    </tbody>
+  </table>
+)
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -36,7 +48,6 @@ class App extends React.Component {
     }else{
       alert('Virhe! Nimi on jo olemassa!')
     }
-
   }
 
   handleNameChange = (event) => {
@@ -56,8 +67,6 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        
-
         <form onSubmit={this.addPerson}>
           <div>
             nimi: <input value={this.state.newName} onChange={this.handleNameChange} />
@@ -69,18 +78,12 @@ class App extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
+    
         <h2>Kaikki Numerot</h2>
         <div>
-           rajaa tuloksia: <input value={this.state.filter} onChange={this.handleFilterChange} />
+          rajaa tuloksia: <input value={this.state.filter} onChange={this.handleFilterChange} />
         </div>
-        <table>
-          <tbody>
-            {this.state.persons.filter(person => person.name.includes(this.state.filter)).map(person => <tr key={person.name}><td> {person.name}</td><td> {person.number} </td></tr>)}
-          </tbody>
-        </table>
-
-
-
+        <NumberTable persons={this.state.persons.filter(person => person.name.includes(this.state.filter))} />       
       </div>
     )
   }
