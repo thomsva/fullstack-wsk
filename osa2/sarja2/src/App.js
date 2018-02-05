@@ -71,6 +71,11 @@ class App extends React.Component {
               persons: this.state.persons.filter(person => person.id !== id).concat(updPerson)
             })
           })
+          .catch(error => {
+            alert('henkilö on jo poistettu!!')
+            this.setState({ persons: this.state.persons.filter(p => p.id !== id) })
+          })
+      
           this.setState({
             message: "Muutettu henkilön tietoja!"
           })
