@@ -40,7 +40,19 @@ class App extends React.Component {
           })
         })
     }else{
-      alert('Virhe! Nimi on jo olemassa!')
+      const id = persons.filter(person => person.name === newPerson.name)[0].id
+
+      if (window.confirm("Löytyy jo " + newPerson.name + ".  Päivitetäänkö numero?")) { 
+
+        personService
+          .update(id, newPerson)
+          .then(updPerson => {
+            this.setState({
+              persons: this.state.persons.filter(person => person.id !== id).concat(updPerson)
+            })
+          })
+          
+      }
     }
   }
 
