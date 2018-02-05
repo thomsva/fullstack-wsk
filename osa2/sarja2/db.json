@@ -12,13 +12,28 @@
     },
     {
       "name": "Arto Järvinen",
-      "number": "040-1234567",
+      "number": "040-123456",
       "id": 3
     },
     {
       "name": "Lea Kutvonen",
       "number": "040-123456",
       "id": 4
+    },
+    {
+      "name": "Testi Tersti",
+      "number": "12-123123",
+      "id": 5
+    },
+    {
+      "name": "Päivittyykö?",
+      "number": "123",
+      "id": 6
+    },
+    {
+      "name": "HepHep",
+      "number": "1",
+      "id": 7
     }
   ]
 }

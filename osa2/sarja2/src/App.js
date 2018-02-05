@@ -46,12 +46,17 @@ class App extends React.Component {
     const persons=this.state.persons
     
     if (persons.filter(person => person.name === newPerson.name).length ===0){
-      const persons=this.state.persons.concat(newPerson)
-      this.setState({
-        persons: persons,
-        newName: '',
-        newNumber: ''
-      })
+      //const persons=this.state.persons.concat(newPerson)
+
+      axios.post('http://localhost:3001/persons', newPerson)
+        .then(response => {
+          console.log(response)
+          this.setState({
+            persons: this.state.persons.concat(response.data),
+            newName: '',
+            newNumber: ''
+          })
+        })
     }else{
       alert('Virhe! Nimi on jo olemassa!')
     }
